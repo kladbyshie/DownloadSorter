@@ -32,6 +32,7 @@ class foldersetup:
 
 class OnMyWatch:
     def __init__(self):
+        os.chdir(directory)
         self.observer = Observer()
     
     def run(self): 
@@ -62,15 +63,24 @@ class Handler(FileSystemEventHandler):
             return None
         
         #this checks files created in the directory and then moves/deletes them to the appropriate folder
-        elif event.event_type == 'created': 
+        elif event.event_type == 'created':
             print("Watchdog received created event - % s." % event.src_path)
             filename = event.src_path[event.src_path.find('\\')+1::]
             ending = filename[filename.find('.')::].lower()
             folder = Handler.multikey(ending)
             if folder is not None:
                 folderlocation = f"{directory}/{folder}"
-                shutil.copy2(event.src_path, folderlocation)
-                os.remove(event.src_path)
+                while True:
+                    if os.path.exists(event.src_path):
+                        shutil.copy2(event.src_path, folderlocation)
+                        print(f"{filename} sorted!")
+                        os.remove(event.src_path)
+                        break
+                    else:
+                        #in case the file "does not exist" it sleeps and tries to sort it out again
+                        time.sleep(1)
+                        continue
+                    
                 
 if __name__ == '__main__': 
     watch = OnMyWatch()

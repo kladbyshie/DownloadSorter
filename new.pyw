@@ -4,7 +4,7 @@ import shutil
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
-#Note: directory.txt should only contain the needed directory
+#Note: directory.txt needs to be created that contains the directory monitored
 with open("directory.txt", "r") as direct:
     directory = direct.readlines()
     directory = directory[0].strip()

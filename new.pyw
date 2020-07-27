@@ -19,17 +19,9 @@ itemsort = {
     ('.torrent'): "Torrents",
 }
 
-#if folders are not set up, this class will create them based on the itemsort values
-class foldersetup:
-    def __init__(self):
-        os.chdir(directory)
-        folders = list(itemsort.values())
-        for item in folders:
-            if not os.path.isdir(item):
-                os.mkdir(item)
-
 class DownloadSorter:
     def __init__(self):
+        self.foldersetup()
         #This is the loop that will basically run the check function every 15 seconds. The check function sorts anything in the folder (NOT only when new files come in)
         starttime = time.time()
         while True:
@@ -41,7 +33,15 @@ class DownloadSorter:
         for keys, value in itemsort.items():
             if item in keys:
                 return(value)
-        return(None) 
+        return(None)
+
+    @staticmethod
+    def foldersetup():
+        os.chdir(directory)
+        folders = list(itemsort.values())
+        for item in folders:
+            if not os.path.isdir(item):
+                os.mkdir(item)
 
     @staticmethod
     def check():
@@ -56,7 +56,5 @@ class DownloadSorter:
                 os.remove(item)
 
 if __name__ == '__main__': 
-    folder = foldersetup()
-    folder
     sorter = DownloadSorter()
     sorter

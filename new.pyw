@@ -48,7 +48,7 @@ class DownloadSorter:
         items = os.listdir(directory)
         for item in items:
             ending = item[item.rfind('.')::].lower()
-            folder = sorter.multikey(ending)
+            folder = DownloadSorter.multikey(ending)
             if folder is not None:
                 folderlocation = f"{directory}/{folder}"
                 shutil.copy2(item, folderlocation)

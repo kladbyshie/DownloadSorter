@@ -28,8 +28,9 @@ class foldersetup:
             if not os.path.isdir(item):
                 os.mkdir(item)
 
-class sorter:
+class DownloadSorter:
     def __init__(self):
+        #This is the loop that will basically run the check function every 15 seconds. The check function sorts anything in the folder (NOT only when new files come in)
         starttime = time.time()
         while True:
             self.check()
@@ -57,5 +58,5 @@ class sorter:
 if __name__ == '__main__': 
     folder = foldersetup()
     folder
-    sorter = sorter()
+    sorter = DownloadSorter()
     sorter
